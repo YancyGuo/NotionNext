@@ -50,3 +50,5 @@ yarn-error.log*
 # yarn
 package-lock.json
 # yarn.lock
+
+CLAUDE.md
