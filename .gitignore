@@ -52,3 +52,4 @@ package-lock.json
 # yarn.lock
 
 CLAUDE.md
+.notion-api-lock
