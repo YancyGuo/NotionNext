@@ -77,7 +77,20 @@ const Hero = props => {
         if (!response.ok)
           throw new Error(`Random image API: ${response.status}`)
 
-        const rawUrl = (await response.text()).trim()
+        const responseBody = (await response.text()).trim()
+        let rawUrl = responseBody
+        try {
+          const payload = JSON.parse(responseBody)
+          rawUrl =
+            typeof payload === 'string'
+              ? payload
+              : payload?.url || payload?.data?.url || ''
+        } catch {
+          // Some ImgBed versions return the direct URL as plain text.
+        }
+        rawUrl = rawUrl.trim()
+        if (!rawUrl) throw new Error('Random image API returned no URL')
+
         const imageUrl = new URL(rawUrl, window.location.href)
         if (!['http:', 'https:'].includes(imageUrl.protocol)) {
           throw new Error('Random image URL must use HTTP(S)')
