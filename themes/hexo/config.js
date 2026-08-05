@@ -17,6 +17,9 @@ const CONFIG = {
   // 是否显示开始阅读按钮
   HEXO_SHOW_START_READING: true,
 
+  // 可选：返回具体图片 URL 的随机图片接口，例如 /random?type=url&dir=...
+  HEXO_HOME_BANNER_RANDOM_IMAGE_API: '',
+
   // 菜单配置
   HEXO_MENU_INDEX: true, // 显示首页
   HEXO_MENU_CATEGORY: true, // 显示分类

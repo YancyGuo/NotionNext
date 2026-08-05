@@ -266,6 +266,28 @@ const Style = () => {
         );
       }
 
+      /* 默认封面保持可见，随机图完整解码后再以轻微缩放淡入。 */
+      #theme-hexo .header-cover-random {
+        opacity: 0;
+        transform: scale(1.04);
+        transition:
+          opacity 850ms cubic-bezier(0.22, 1, 0.36, 1),
+          transform 1100ms cubic-bezier(0.22, 1, 0.36, 1);
+        will-change: opacity, transform;
+      }
+
+      #theme-hexo .header-cover-random.is-ready {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        #theme-hexo .header-cover-random {
+          transition: none;
+          transform: none;
+        }
+      }
+
       /* Custem */
       .tk-footer {
         opacity: 0;
