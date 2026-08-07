@@ -125,44 +125,48 @@ const LayoutBase = props => {
         </Transition>
 
         {/* 主区块 */}
-        <main
-          id='wrapper'
-          className={`${siteConfig('HEXO_HOME_BANNER_ENABLE', null, CONFIG) ? 'pt-0' : 'pt-16'} bg-hexo-background-gray dark:bg-black w-full md:px-8 lg:px-24 min-h-screen relative`}>
-          <div
-            id='container-inner'
-            className={
-              (JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE'))
-                ? 'flex-row-reverse'
-                : '') +
-              ' w-full mx-auto lg:flex lg:space-x-4 justify-center relative z-10'
-            }>
+        <div id='hexo-content-stage'>
+          {/* 背景图独立于内容滚动，并在内容区内跟随视口 */}
+          <div id='hexo-background-layer' aria-hidden='true' />
+          <main
+            id='wrapper'
+            className={`${siteConfig('HEXO_HOME_BANNER_ENABLE', null, CONFIG) ? 'pt-0' : 'pt-16'} bg-hexo-background-gray dark:bg-black w-full md:px-8 lg:px-24 min-h-screen relative`}>
             <div
-              className={`${className || ''} w-full ${fullWidth ? '' : 'max-w-4xl'} h-full overflow-hidden`}>
-              {showArticleSwitchPlaceholder ? (
-                <ArticleSwitchPlaceholder />
-              ) : (
-                <Transition
-                  show={isArticleSlugPage ? true : !onLoading}
-                  appear={true}
-                  enter='transition ease-in-out duration-700 transform order-first'
-                  enterFrom='opacity-0 translate-y-16'
-                  enterTo='opacity-100'
-                  leave='transition ease-in-out duration-300 transform'
-                  leaveFrom='opacity-100 translate-y-0'
-                  leaveTo='opacity-0 -translate-y-16'
-                  unmount={false}>
-                  {/* 主区上部嵌入 */}
-                  {slotTop}
+              id='container-inner'
+              className={
+                (JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE'))
+                  ? 'flex-row-reverse'
+                  : '') +
+                ' w-full mx-auto lg:flex lg:space-x-4 justify-center relative z-10'
+              }>
+              <div
+                className={`${className || ''} w-full ${fullWidth ? '' : 'max-w-4xl'} h-full overflow-hidden`}>
+                {showArticleSwitchPlaceholder ? (
+                  <ArticleSwitchPlaceholder />
+                ) : (
+                  <Transition
+                    show={isArticleSlugPage ? true : !onLoading}
+                    appear={true}
+                    enter='transition ease-in-out duration-700 transform order-first'
+                    enterFrom='opacity-0 translate-y-16'
+                    enterTo='opacity-100'
+                    leave='transition ease-in-out duration-300 transform'
+                    leaveFrom='opacity-100 translate-y-0'
+                    leaveTo='opacity-0 -translate-y-16'
+                    unmount={false}>
+                    {/* 主区上部嵌入 */}
+                    {slotTop}
 
-                  {children}
-                </Transition>
-              )}
+                    {children}
+                  </Transition>
+                )}
+              </div>
+
+              {/* 右侧栏 */}
+              <SideRight {...props} />
             </div>
-
-            {/* 右侧栏 */}
-            <SideRight {...props} />
-          </div>
-        </main>
+          </main>
+        </div>
 
         <div className='block lg:hidden'>
           <TocDrawer post={post} cRef={drawerRight} targetRef={tocRef} />

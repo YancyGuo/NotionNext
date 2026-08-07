@@ -25,6 +25,14 @@ const Style = () => {
   const textSecondaryDark = siteConfig('HEXO_COLOR_TEXT_SECONDARY_DARK', '#6b7280', CONFIG)
   const border = siteConfig('HEXO_COLOR_BORDER', '#e5e7eb', CONFIG)
   const borderDark = siteConfig('HEXO_COLOR_BORDER_DARK', '#000000', CONFIG)
+  const backgroundImage = siteConfig(
+    'HEXO_BACKGROUND_IMAGE',
+    '/image.webp',
+    CONFIG
+  )
+  const backgroundImageValue = backgroundImage
+    ? `url("${backgroundImage}")`
+    : 'none'
 
   return (
     <style jsx global>{`
@@ -65,6 +73,30 @@ const Style = () => {
       #theme-hexo,
       #theme-hexo .bg-hexo-background-gray {
         background-color: var(--hexo-color-bg);
+      }
+
+      #theme-hexo #hexo-content-stage {
+        position: relative;
+      }
+
+      #theme-hexo #hexo-background-layer {
+        position: sticky;
+        top: 0;
+        z-index: 0;
+        height: 100vh;
+        margin-bottom: -100vh;
+        pointer-events: none;
+        background-color: transparent;
+        background-image: ${backgroundImageValue};
+        background-repeat: no-repeat;
+        background-size: 100% auto;
+        background-position: center bottom;
+      }
+
+      #theme-hexo #wrapper {
+        position: relative;
+        z-index: 1;
+        background-color: transparent;
       }
 
       #theme-hexo #blog-post-card,

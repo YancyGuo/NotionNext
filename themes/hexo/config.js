@@ -50,6 +50,7 @@ const CONFIG = {
 
   HEXO_COLOR_PRIMARY: '#928CEE',
   HEXO_THEME_COLOR: '#928CEE', // 主题色配置（默认为 #928CEE）
+  HEXO_BACKGROUND_IMAGE: '/image.webp', // Hexo 内容区背景图；首屏 Hero 仍覆盖在最上层
 
   // Blue Archive 风格的点击、鼠标拖尾和蓝色粒子特效
   HEXO_BA_EFFECT_ENABLE: true,
