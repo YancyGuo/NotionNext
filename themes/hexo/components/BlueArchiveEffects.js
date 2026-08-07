@@ -3,7 +3,7 @@ import { siteConfig } from '@/lib/config'
 import { loadExternalResource } from '@/lib/utils'
 import CONFIG from '../config'
 
-const DEFAULT_CDN =
+const DEFAULT_SCRIPT =
   '/js/ba-click-fx.iife.js'
 
 /**
@@ -13,7 +13,7 @@ const DEFAULT_CDN =
 const BlueArchiveEffects = () => {
   const enabled = siteConfig('HEXO_BA_EFFECT_ENABLE', true, CONFIG)
   const color = siteConfig('HEXO_BA_EFFECT_COLOR', '#4ca7ff', CONFIG)
-  const cdn = siteConfig('HEXO_BA_EFFECT_CDN', DEFAULT_CDN, CONFIG)
+  const script = siteConfig('HEXO_BA_EFFECT_SCRIPT', DEFAULT_SCRIPT, CONFIG)
 
   useEffect(() => {
     const effectEnabled =
@@ -31,7 +31,7 @@ const BlueArchiveEffects = () => {
 
     const start = async () => {
       try {
-        await loadExternalResource(cdn, 'js')
+        await loadExternalResource(script, 'js')
         if (destroyed || !window.BAClickFX?.BAClickFX) {
           return
         }
@@ -71,7 +71,7 @@ const BlueArchiveEffects = () => {
       destroyed = true
       effect?.destroy()
     }
-  }, [cdn, color, enabled])
+  }, [script, color, enabled])
 
   return null
 }
