@@ -51,6 +51,11 @@ const CONFIG = {
   HEXO_COLOR_PRIMARY: '#928CEE',
   HEXO_THEME_COLOR: '#928CEE', // 主题色配置（默认为 #928CEE）
 
+  // Blue Archive 风格的点击、鼠标拖尾和蓝色粒子特效
+  HEXO_BA_EFFECT_ENABLE: true,
+  HEXO_BA_EFFECT_COLOR: '#4ca7ff',
+  HEXO_BA_EFFECT_CDN: '/js/ba-click-fx.iife.js',
+
   /** 文章详情页客户端切换时，主栏显示卡片+转圈占位（无全屏遮罩；已有独立 LoadingCover 的主题无需此项） */
   HEXO_ARTICLE_ROUTE_LOADING: true
 }

@@ -40,6 +40,11 @@ const AlgoliaSearchModal = dynamic(
   { ssr: false }
 )
 
+const BlueArchiveEffects = dynamic(
+  () => import('./components/BlueArchiveEffects'),
+  { ssr: false }
+)
+
 // 主题全局状态
 const ThemeGlobalHexo = createContext()
 export const useHexoGlobal = () => useContext(ThemeGlobalHexo)
@@ -100,6 +105,7 @@ const LayoutBase = props => {
         id='theme-hexo'
         className={`${siteConfig('FONT_STYLE')} dark:bg-black scroll-smooth`}>
         <Style />
+        <BlueArchiveEffects />
 
         {/* 顶部导航 */}
         <Header {...props} />
