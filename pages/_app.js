@@ -16,7 +16,6 @@ import ErrorHandler from '@/lib/utils/errorHandler'
 
 // 各种扩展插件 这个要阻塞引入
 import BLOG from '@/blog.config'
-import ExternalPlugins from '@/components/ExternalPlugins'
 import SEO from '@/components/SEO'
 import { zhCN } from '@clerk/localizations'
 import dynamic from 'next/dynamic'
@@ -24,6 +23,9 @@ import dynamic from 'next/dynamic'
 const ClerkProvider = dynamic(() =>
   import('@clerk/nextjs').then(m => m.ClerkProvider)
 )
+const ExternalPlugins = dynamic(() => import('@/components/ExternalPlugins'), {
+  ssr: false
+})
 const AppErrorBoundary = ErrorHandler.createErrorBoundary(
   <div style={{ padding: '2rem', textAlign: 'center', minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
     <h1 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Something went wrong</h1>
