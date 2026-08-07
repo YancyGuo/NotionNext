@@ -58,6 +58,7 @@ package-lock.json
 # yarn.lock
 
 CLAUDE.md
+AGENT.md
 .notion-api-lock
 .tmp/
 .perf/
