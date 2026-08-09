@@ -39,7 +39,7 @@ const loadImage = src =>
     image.src = src
   })
 
-const HeroTitle = ({ title }) => {
+const HeroTitle = ({ title, className = '', invertHalo = true }) => {
   const canvasRef = useRef(null)
   const safeTitle = (title || '').trim()
 
@@ -80,8 +80,9 @@ const HeroTitle = ({ title }) => {
 
       if (halo) {
         context.save()
-        // The source Halo is dark for a white logo canvas; invert it for the dark Hero.
-        context.filter = 'brightness(0) invert(1)'
+        // The source Halo is dark for a light surface. The Hero uses a dark
+        // background, so it opts into the inverted version.
+        context.filter = invertHalo ? 'brightness(0) invert(1)' : 'none'
         context.drawImage(
           halo,
           graphX,
@@ -143,10 +144,10 @@ const HeroTitle = ({ title }) => {
     return () => {
       cancelled = true
     }
-  }, [title])
+  }, [title, invertHalo])
 
   return (
-    <div className='hero-brand' aria-label={safeTitle}>
+    <div className={`hero-brand ${className}`.trim()} aria-label={safeTitle}>
       <canvas
         ref={canvasRef}
         className='hero-brand__canvas'

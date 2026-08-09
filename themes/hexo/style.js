@@ -3,6 +3,10 @@ import { themeConsoleStyle } from '@/lib/themeConsoleStyle'
 import { siteConfig } from '@/lib/config'
 import CONFIG from './config'
 
+// A local derivative of the official tile with half of the blank top area cropped.
+const BLUE_ARCHIVE_FOOTER_PATTERN =
+  '/images/hero/bluearchive/footer-pattern.png'
+
 /**
  * 这里的css样式只对当前主题生效
  * 主题客制化css
@@ -21,8 +25,16 @@ const Style = () => {
   const titleDark = siteConfig('HEXO_COLOR_TITLE_DARK', '#f3f4f6', CONFIG)
   const text = siteConfig('HEXO_COLOR_TEXT', '#374151', CONFIG)
   const textDark = siteConfig('HEXO_COLOR_TEXT_DARK', '#d1d5db', CONFIG)
-  const textSecondary = siteConfig('HEXO_COLOR_TEXT_SECONDARY', '#9ca3af', CONFIG)
-  const textSecondaryDark = siteConfig('HEXO_COLOR_TEXT_SECONDARY_DARK', '#6b7280', CONFIG)
+  const textSecondary = siteConfig(
+    'HEXO_COLOR_TEXT_SECONDARY',
+    '#9ca3af',
+    CONFIG
+  )
+  const textSecondaryDark = siteConfig(
+    'HEXO_COLOR_TEXT_SECONDARY_DARK',
+    '#6b7280',
+    CONFIG
+  )
   const border = siteConfig('HEXO_COLOR_BORDER', '#e5e7eb', CONFIG)
   const borderDark = siteConfig('HEXO_COLOR_BORDER_DARK', '#000000', CONFIG)
   const backgroundImage = siteConfig(
@@ -36,6 +48,8 @@ const Style = () => {
 
   return (
     <style jsx global>{`
+      @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700&display=swap');
+
       #theme-hexo {
         --hexo-color-primary-light: ${primary};
         --hexo-color-primary-dark: ${primaryDark};
@@ -106,6 +120,101 @@ const Style = () => {
         position: relative;
         z-index: 1;
         background-color: transparent;
+      }
+
+      /* Official-style footer: white base with a subtle repeating cross-star tile. */
+      #theme-hexo .hexo-footer {
+        position: relative;
+        isolation: isolate;
+        overflow: hidden;
+        background-color: #ffffff;
+        background-image: url('${BLUE_ARCHIVE_FOOTER_PATTERN}');
+        background-repeat: repeat;
+        border-top: 1px solid rgba(18, 138, 250, 0.08);
+        color: #374151;
+      }
+
+      #theme-hexo .hexo-footer__inner {
+        position: relative;
+        z-index: 1;
+        width: min(100%, 960px);
+        margin: 0 auto;
+      }
+
+      #theme-hexo .hexo-footer__meta {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        color: #111827;
+        font-family:
+          'Noto Sans JP', 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
+        font-size: 1rem;
+        font-weight: 700;
+        line-height: 1.5;
+      }
+
+      #theme-hexo .hexo-footer__registrations {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 0.25rem;
+      }
+
+      #theme-hexo .hexo-footer__registrations:empty {
+        display: none;
+      }
+
+      #theme-hexo .hexo-footer__metric {
+        align-items: center;
+        white-space: nowrap;
+      }
+
+      #theme-hexo .hexo-footer__separator {
+        display: inline-block;
+        margin: 0 0.7rem;
+        color: #6b7280;
+      }
+
+      #theme-hexo .hexo-footer__details {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        margin-top: 0.15rem;
+      }
+
+      #theme-hexo .hexo-footer__brand {
+        margin: 0.5rem auto 0;
+      }
+
+      #theme-hexo .hero-brand--footer {
+        width: min(420px, 88vw);
+        margin: 0 auto;
+      }
+
+      #theme-hexo .hero-brand--footer::before {
+        inset: 20% 24%;
+        background: rgba(52, 161, 255, 0.1);
+        filter: blur(24px);
+      }
+
+      #theme-hexo .hero-brand--footer .hero-brand__canvas {
+        filter: none;
+      }
+
+      #theme-hexo .hexo-footer__bio {
+        margin: 0;
+        color: #6b7280;
+        font-size: 0.75rem;
+      }
+
+      #theme-hexo .hexo-footer a {
+        color: #111827;
+      }
+
+      #theme-hexo .hexo-footer a:hover {
+        color: var(--theme-color);
       }
 
       #theme-hexo #blog-post-card,
@@ -367,7 +476,7 @@ const Style = () => {
       #theme-hexo #home-nav-button a:hover {
         color: #000 !important;
       }
-  `}</style>
+    `}</style>
   )
 }
 
