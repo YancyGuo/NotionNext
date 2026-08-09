@@ -93,6 +93,15 @@ const Style = () => {
         background-position: center bottom;
       }
 
+      /* 当视口比例窄于 3200:2248 背景图时，按首屏 Hero 的方式铺满并允许裁剪。 */
+      @media screen and (max-width: 767px),
+        screen and (max-aspect-ratio: 3200/2248) {
+        #theme-hexo #hexo-background-layer {
+          background-size: cover;
+          background-position: center center;
+        }
+      }
+
       #theme-hexo #wrapper {
         position: relative;
         z-index: 1;

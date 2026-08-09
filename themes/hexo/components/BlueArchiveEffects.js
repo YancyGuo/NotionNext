@@ -5,6 +5,8 @@ import CONFIG from '../config'
 
 const DEFAULT_SCRIPT =
   '/js/ba-click-fx.iife.js'
+const MOBILE_EFFECT_QUERY =
+  '(max-width: 767px), (max-width: 1024px) and (orientation: portrait)'
 
 /**
  * 客户端加载 ba-click-fx 官方实现。
@@ -28,6 +30,25 @@ const BlueArchiveEffects = () => {
 
     let destroyed = false
     let effect
+    const mobileQuery = window.matchMedia(MOBILE_EFFECT_QUERY)
+
+    const updateTrailMode = () => {
+      effect?.updateConfig({ trailEnabled: !mobileQuery.matches })
+    }
+    const addMobileQueryListener = () => {
+      if (typeof mobileQuery.addEventListener === 'function') {
+        mobileQuery.addEventListener('change', updateTrailMode)
+      } else {
+        mobileQuery.addListener(updateTrailMode)
+      }
+    }
+    const removeMobileQueryListener = () => {
+      if (typeof mobileQuery.removeEventListener === 'function') {
+        mobileQuery.removeEventListener('change', updateTrailMode)
+      } else {
+        mobileQuery.removeListener(updateTrailMode)
+      }
+    }
 
     const start = async () => {
       try {
@@ -44,7 +65,7 @@ const BlueArchiveEffects = () => {
           renderingMode: 'enhanced',
           bloomBackend: 'webgl2',
           clickEnabled: true,
-          trailEnabled: true,
+          trailEnabled: !mobileQuery.matches,
           trailAlways: false,
           hostCompositing: 'source-over',
           maxDpr: 1
@@ -60,6 +81,7 @@ const BlueArchiveEffects = () => {
         effect.setFxParam('bloom.clickEmissionScale', 1)
         effect.setFxParam('bloom.diffusion', 5)
 
+        addMobileQueryListener()
       } catch (error) {
         console.warn('[Hexo] ba-click-fx 加载失败', error)
       }
@@ -69,6 +91,7 @@ const BlueArchiveEffects = () => {
 
     return () => {
       destroyed = true
+      removeMobileQueryListener()
       effect?.destroy()
     }
   }, [script, color, enabled])
