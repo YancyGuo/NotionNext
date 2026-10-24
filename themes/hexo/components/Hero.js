@@ -15,7 +15,6 @@ let wrapperTop = 0
  * @returns
  */
 const Hero = props => {
-  const [typed, changeType] = useState()
   const [randomImageSrc, setRandomImageSrc] = useState(null)
   const [randomImageReady, setRandomImageReady] = useState(false)
   const { siteInfo } = props
@@ -30,36 +29,40 @@ const Hero = props => {
     window.scrollTo({ top: wrapperTop - 2 * rem, behavior: 'smooth' })
   }
 
-  const GREETING_WORDS = siteConfig('GREETING_WORDS').split(',')
+  const GREETING_WORDS = siteConfig('GREETING_WORDS')
   const GREETING_WORDS_TYPE_SPEED =
     Number(siteConfig('GREETING_WORDS_TYPE_SPEED')) || 200
   const GREETING_WORDS_BACK_SPEED =
     Number(siteConfig('GREETING_WORDS_BACK_SPEED')) || 100
   useEffect(() => {
+    let disposed = false
+    let typedInstance
     updateHeaderHeight()
 
-    if (!typed && window && document.getElementById('typed')) {
-      loadExternalResource('/js/typed.min.js', 'js').then(() => {
-        if (window.Typed) {
-          changeType(
-            new window.Typed('#typed', {
-              strings: GREETING_WORDS,
+    if (document.getElementById('typed')) {
+      loadExternalResource('/js/typed.min.js', 'js')
+        .then(() => {
+          if (!disposed && window.Typed) {
+            typedInstance = new window.Typed('#typed', {
+              strings: GREETING_WORDS.split(','),
               typeSpeed: GREETING_WORDS_TYPE_SPEED,
               backSpeed: GREETING_WORDS_BACK_SPEED,
               backDelay: 400,
               showCursor: true,
               smartBackspace: true
             })
-          )
-        }
-      })
+          }
+        })
+        .catch(() => {})
     }
 
     window.addEventListener('resize', updateHeaderHeight)
     return () => {
+      disposed = true
+      typedInstance?.destroy()
       window.removeEventListener('resize', updateHeaderHeight)
     }
-  })
+  }, [GREETING_WORDS, GREETING_WORDS_TYPE_SPEED, GREETING_WORDS_BACK_SPEED])
 
   useEffect(() => {
     if (!randomImageApi || typeof window === 'undefined') return undefined

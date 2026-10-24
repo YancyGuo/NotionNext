@@ -6,7 +6,7 @@ import { siteConfig } from '@/lib/config'
  */
 export default function PoweredBy({
   className,
-  repositoryUrl = 'https://github.com/tangly1024/NotionNext'
+  repositoryUrl = 'https://github.com/notionnext-org/NotionNext'
 }) {
   return (
     <div className={`inline text-sm font-serif ${className || ''}`}>
