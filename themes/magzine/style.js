@@ -30,6 +30,12 @@ const Style = () => {
 
       ${themeConsoleStyle('magzine', CONFIG)}
       ${buildThemePrimaryCss('#theme-magzine', '--magzine-console-primary')}
+
+      #theme-magzine .cta a:hover,
+      #theme-magzine .cta a:focus-visible {
+        color: #111827 !important;
+      }
+
   `}</style>
   )
 }

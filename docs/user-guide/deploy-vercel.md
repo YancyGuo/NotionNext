@@ -1,4 +1,4 @@
-# Vercel部署NotionNext
+# Vercel 部署 NotionNext
 > 迁移自：[Vercel部署NotionNext](https://docs.tangly1024.com/article/vercel-deploy-notion-next)
 > 发布日期：2023-2-10
 > 最后编辑：2026-5-2
@@ -11,7 +11,7 @@
 遵循此教程您将在[Vercel](https://tangly1024.com/article/vercel)上免费搭建一个[NotionNext](/user-guide/intro)博客。
 
 ::: info 问题
-[NotionNext](/user-guide/intro)是一个完全开源免费的建站脚本，将您的[Notion](https://blog.tangly1024.com/article/notion)笔记实时渲染成博客。
+[NotionNext](/user-guide/intro)是一个开源站点系统，可以把你的 Notion 内容发布为博客、作品集、知识库、导航站或产品官网。
 
 Vercel是一个来自国外的在线脚本托管平台，对于个人使用，其免费版已经完全足够，因此您无需购买服务器即可搭建自己的网站。
 :::
@@ -27,13 +27,13 @@ Vercel是一个来自国外的在线脚本托管平台，对于个人使用，�
 
 部署站点只需三步，分别是：
 
-1. 复制我的Notion模板
+1. 复制官方 Notion 模板
 
-1. 复制我的Github源代码
+1. Fork 官方 GitHub 仓库
 
-1. 在Vercel中一键部署
+1. 在 Vercel 中一键部署
 
-部署文档已经过大量网友实践验证，如您实在无法完成独立部署，可以考虑[向我们求助](/user-guide/help/support)。
+部署文档已经过大量站长实践验证。若无法完成独立部署，先查看 [获取帮助](/user-guide/help/) 中的社区支持和付费协助说明。
 
 
 ### 视频帮助
@@ -130,10 +130,8 @@ Vercel是一个来自国外的在线脚本托管平台，对于个人使用，�
 
 1. 请先注册并登陆[Github账号](https://github.com/)，
 
-1. 仅需点击下方链接，即可一键**Fork(复刻)**项目。
-[Build software better, together](https://github.com/tangly1024/NotionNext/fork)
-
-You can't perform that action at this time. You signed in with another tab or window. You signed out in another tab or window. Reload to refresh your session. Reload to refresh your session.
+1. 仅需点击下方链接，即可一键 **Fork（复刻）** 官方项目。
+[Fork NotionNext](https://github.com/notionnext-org/NotionNext/fork)
 
 
 ## 三、Vercel部署
@@ -183,6 +181,12 @@ To deploy a new Project, import an existing Git Repository or get started with o
 
 1. 点击`Deploy`按钮，静候两分钟等待部署。
 ![1.点击Deploy进行自动部署](/legacy/9a881298d4a9b142.png)
+
+### 可选：开启 Fluid Compute
+
+NotionNext 默认兼容未开启 Fluid Compute 的 Vercel Hobby 项目，部署时无需为此更改设置。若希望 Vercel Functions 复用运行实例、改善冷启动并提升并发处理能力，可在项目的 **Settings → Functions → Fluid Compute** 中开启，然后重新部署使设置生效；也可在 `vercel.json` 显式设置 `"fluid": true`，将选择随仓库配置。两种方式选其一即可。
+
+Fluid Compute 是可选的性能优化，不是 NotionNext 的部署前提。不开启时，Hobby 旧计算模式的函数时长上限为 60 秒；NotionNext 的缓存维护函数兼容此限制，`/api/revalidate` 每批运行约 45 秒后通过 HTTP 202 和 `remainingPaths` 续传。开启后 Hobby 函数时长上限为 300 秒，Fluid Compute 可优化函数实例复用与并发，但 NotionNext 仍采用较短批次预算以便及时返回续传结果。其他套餐的限制请以 Vercel 当前方案文档为准：[Functions 最大执行时间](https://vercel.com/docs/functions/limitations#max-duration)、[Fluid Compute](https://vercel.com/docs/fluid-compute)。
 
 
 ## 四、完成🎉🎉🎉
